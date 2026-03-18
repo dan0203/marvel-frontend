@@ -13,8 +13,8 @@ const Characters = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                // Récupération des données de tous les personnages
                 const response = await axios.get(import.meta.env.VITE_API_URL + '/characters');
-                console.log(response.data);
 
                 setCharacters(response.data);
                 setIsLoading(false);
@@ -32,7 +32,7 @@ const Characters = () => {
         <main>
             {characters.results.map(character => {
                 return (
-                    <Link to="/" key={character._id}>
+                    <Link to="/character/" key={character._id} state={{ id: character._id }}>
                         <article>
                             <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
                             <p className="name">{character.name}</p>
