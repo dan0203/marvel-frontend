@@ -1,3 +1,4 @@
+// Modules internes
 import './Comics.css';
 
 const Comics = () => {

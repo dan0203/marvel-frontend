@@ -1,3 +1,4 @@
+// Modules internes
 import './Favorites.css';
 
 const Favorites = () => {
