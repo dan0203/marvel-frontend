@@ -9,6 +9,7 @@ import { Link } from 'react-router';
 const Characters = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [characters, setCharacters] = useState([]);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,17 +31,33 @@ const Characters = () => {
         <p>Chargement en cours...</p>
     ) : (
         <main>
-            {characters.results.map(character => {
-                return (
-                    <Link to="/character/" key={character._id} state={{ id: character._id }}>
-                        <article>
-                            <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
-                            <p className="name">{character.name}</p>
-                            <p className="description">{character.description}</p>
-                        </article>
-                    </Link>
-                );
-            })}
+            <label htmlFor="search">LOUPE</label>
+            <input
+                type="text"
+                name="search"
+                id="search"
+                value={search}
+                onChange={event => {
+                    setSearch(event.target.value);
+                }}
+            />
+
+            {characters.results
+                .filter(character => {
+                    // Filtrer les characters dont le name contient le terme saisi dans la barre recherche (en minuscules pour ne pas tenir compte de la casse)
+                    return character.name.toLowerCase().includes(search.toLowerCase());
+                })
+                .map(character => {
+                    return (
+                        <Link to="/character/" key={character._id} state={{ id: character._id }}>
+                            <article>
+                                <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
+                                <p className="name">{character.name}</p>
+                                <p className="description">{character.description}</p>
+                            </article>
+                        </Link>
+                    );
+                })}
         </main>
     );
 };
