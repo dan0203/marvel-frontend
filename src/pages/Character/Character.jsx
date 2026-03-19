@@ -9,6 +9,8 @@ import { useLocation } from 'react-router';
 const Character = () => {
     // Permet la récupération de la valeur id du personnage passé en prop au Link qui mène sur cette page (dans location.state)
     const location = useLocation();
+    // Récupération du paramètre id
+    const characterId = location.pathname.replace('/character/', '');
 
     const [character, setCharacter] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -17,12 +19,12 @@ const Character = () => {
         const fetchData = async () => {
             try {
                 // Récupération des données du personnage
-                const characterResponse = await axios.get(import.meta.env.VITE_API_URL + '/character/' + location.state.id);
+                const characterResponse = await axios.get(import.meta.env.VITE_API_URL + '/character/' + characterId);
                 // Copie des infos dans une nouvelle variable pour la modifier sans toucher à characterResponse
                 const characterToDisplay = characterResponse.data;
 
                 // Récupération des comics liés au personnage
-                const comicsResponse = await axios.get(import.meta.env.VITE_API_URL + '/comics/' + location.state.id);
+                const comicsResponse = await axios.get(import.meta.env.VITE_API_URL + '/comics/' + characterId);
 
                 // Reconstruction du personnage avec le tableau des données complètes des comics qui lui sont associées
                 //  (car le tableau comics renvoyé dans characterResponse ne contient que les id des comics)

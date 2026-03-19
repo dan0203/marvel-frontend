@@ -20,7 +20,7 @@ function App() {
                     <Route path="/characters" element={<Characters />} />
                     <Route path="/comics" element={<Comics />} />
                     <Route path="/favorites" element={<Favorites />} />
-                    <Route path="/character" element={<Character />} />
+                    <Route path="/character/:id" element={<Character />} />
                     <Route path="*" element={<div className="container">Route not found</div>} />
                 </Routes>
             </Router>
