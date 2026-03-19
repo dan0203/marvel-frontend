@@ -8,6 +8,7 @@ import axios from 'axios';
 const Comics = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [comics, setComics] = useState([]);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,15 +30,31 @@ const Comics = () => {
         <p>Chargement en cours...</p>
     ) : (
         <main>
-            {comics.results.map(comic => {
-                return (
-                    <article key={comic._id}>
-                        <img src={`${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}`} alt={comic.title} />
-                        <p className="title">{comic.title}</p>
-                        <p className="description">{comic.description}</p>
-                    </article>
-                );
-            })}
+            <label htmlFor="search">LOUPE</label>
+            <input
+                type="text"
+                name="search"
+                id="search"
+                value={search}
+                onChange={event => {
+                    setSearch(event.target.value);
+                }}
+            />
+
+            {comics.results
+                .filter(comic => {
+                    // Filtrer les comics dont le titre contient le terme saisi dans la barre recherche (en minuscules pour ne pas tenir compte de la casse)
+                    return comic.title.toLowerCase().includes(search.toLowerCase());
+                })
+                .map(comic => {
+                    return (
+                        <article key={comic._id}>
+                            <img src={`${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}`} alt={comic.title} />
+                            <p className="title">{comic.title}</p>
+                            <p className="description">{comic.description}</p>
+                        </article>
+                    );
+                })}
         </main>
     );
 };
