@@ -11,18 +11,24 @@ const Characters = () => {
     const [characters, setCharacters] = useState([]);
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
-    const [pagination, setPagination] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 // Reconstitution des queries qui sont passées au serveur
-                // Il y aura toujours un paramètre limit, dont la valeur sera 100 par défaut (indiqué dans le state par défaut)
+                // Limit : il y aura toujours un paramètre limit, dont la valeur sera 100 par défaut (indiqué dans le state par défaut)
                 //  pour uniformiser l'affichage et le comportement par défaut de l'API
                 let queries = `?limit=${limit}`;
 
-                // Récupération des données de tous les personnages
+                // Skip
+                const skip = (currentPage - 1) * limit;
+                queries += `&skip=${skip}`;
+
+                // Name
+                queries += `&name=${search}`;
+
+                // Récupération des données des personnages correspondant aux filtres
                 const response = await axios.get(import.meta.env.VITE_API_URL + '/characters' + queries);
 
                 setCharacters(response.data);
@@ -33,7 +39,38 @@ const Characters = () => {
         };
 
         fetchData();
-    }, [limit]);
+    }, [search, limit, currentPage]);
+
+    // Construction du tableau de boutons à afficher pour la pagination
+    const numberOfPages = Math.ceil(characters.count / limit);
+    // On aura toujours au moins un bouton
+    const pages = [1];
+
+    if (numberOfPages <= 5) {
+        // si numberOfPages <= 5, afficher tout
+        for (let i = 2; i <= numberOfPages; i++) {
+            pages.push(i);
+        }
+    } else if (currentPage <= 3) {
+        // si currentPage <= 3 et numberOfPages > 5, afficher 1 2 3 ... lastPage
+        pages.push(2);
+        pages.push(3);
+        pages.push('...');
+        pages.push(numberOfPages);
+    } else if (currentPage >= numberOfPages - 2) {
+        // si currentPage >= numberOfPages - 2 et numberOfPages > 5, afficher 1 ... lastPage-2 lastPage-1 lastPage
+        pages.push('...');
+        pages.push(numberOfPages - 2);
+        pages.push(numberOfPages - 1);
+        pages.push(numberOfPages);
+    } else {
+        pages.push('...');
+        pages.push(currentPage - 1);
+        pages.push(currentPage);
+        pages.push(currentPage + 1);
+        pages.push('...');
+        pages.push(numberOfPages);
+    }
 
     return isLoading ? (
         <p>Chargement en cours...</p>
@@ -55,7 +92,14 @@ const Characters = () => {
 
                 <div className="limit">
                     <span>Afficher</span>
-                    <select name="limit" value={limit} onChange={event => setLimit(event.target.value)}>
+                    <select
+                        name="limit"
+                        value={limit}
+                        onChange={event => {
+                            setLimit(Number(event.target.value));
+                            setCurrentPage(1);
+                        }}
+                    >
                         <option value="20">20</option>
                         <option value="40">40</option>
                         <option value="60">60</option>
@@ -66,22 +110,77 @@ const Characters = () => {
                 </div>
             </div>
 
-            {characters.results
-                .filter(character => {
-                    // Filtrer les characters dont le name contient le terme saisi dans la barre recherche (en minuscules pour ne pas tenir compte de la casse)
-                    return character.name.toLowerCase().includes(search.toLowerCase());
-                })
-                .map(character => {
-                    return (
-                        <Link to={`/character/${character._id}`} key={character._id}>
-                            <article>
-                                <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
-                                <p className="name">{character.name}</p>
-                                <p className="description">{character.description}</p>
-                            </article>
-                        </Link>
-                    );
-                })}
+            <div className="pagination">
+                <button
+                    onClick={() => {
+                        setCurrentPage(currentPage - 1);
+                    }}
+                    disabled={!(currentPage > 1)}
+                >
+                    &lt;
+                </button>
+
+                {pages.map((page, index) =>
+                    page === '...' ? (
+                        <span key={index}>...</span>
+                    ) : (
+                        <button key={index} className={currentPage === page ? 'active' : ''} onClick={() => setCurrentPage(page)}>
+                            {page}
+                        </button>
+                    ),
+                )}
+
+                <button
+                    onClick={() => {
+                        setCurrentPage(currentPage + 1);
+                    }}
+                    disabled={!(currentPage < Math.ceil(characters.count / limit))}
+                >
+                    &gt;
+                </button>
+            </div>
+
+            {characters.results.map(character => {
+                return (
+                    <Link to={`/character/${character._id}`} key={character._id}>
+                        <article>
+                            <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
+                            <p className="name">{character.name}</p>
+                            <p className="description">{character.description}</p>
+                        </article>
+                    </Link>
+                );
+            })}
+
+            <div className="pagination">
+                <button
+                    onClick={() => {
+                        setCurrentPage(currentPage - 1);
+                    }}
+                    disabled={!(currentPage > 1)}
+                >
+                    &lt;
+                </button>
+
+                {pages.map((page, index) =>
+                    page === '...' ? (
+                        <span key={index}>...</span>
+                    ) : (
+                        <button key={index} className={currentPage === page ? 'active' : ''} onClick={() => setCurrentPage(page)}>
+                            {page}
+                        </button>
+                    ),
+                )}
+
+                <button
+                    onClick={() => {
+                        setCurrentPage(currentPage + 1);
+                    }}
+                    disabled={!(currentPage < Math.ceil(characters.count / limit))}
+                >
+                    &gt;
+                </button>
+            </div>
         </main>
     );
 };

@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router';
 
 const Character = () => {
-    // Permet la récupération de la valeur id du personnage passé en prop au Link qui mène sur cette page (dans location.state)
+    // Permet la récupération de la valeur id du personnage passé en param dans la route : /character/:id
     const location = useLocation();
     // Récupération du paramètre id
     const characterId = location.pathname.replace('/character/', '');
