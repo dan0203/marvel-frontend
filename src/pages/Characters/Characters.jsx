@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
 import { Link } from 'react-router';
+import Cookies from 'js-cookie';
 
 const Characters = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -12,6 +13,7 @@ const Characters = () => {
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
+    const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -142,13 +144,28 @@ const Characters = () => {
 
             {characters.results.map(character => {
                 return (
-                    <Link to={`/character/${character._id}`} key={character._id}>
-                        <article>
-                            <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
-                            <p className="name">{character.name}</p>
-                            <p className="description">{character.description}</p>
-                        </article>
-                    </Link>
+                    <div>
+                        <button
+                            onClick={() => {
+                                if (!favorites.includes(character._id)) {
+                                    const copyFavorites = [...favorites];
+                                    copyFavorites.push(character._id);
+                                    setFavorites(copyFavorites);
+                                    Cookies.set('characters_favorites', JSON.stringify(copyFavorites));
+                                }
+                            }}
+                        >
+                            COEUR
+                        </button>
+
+                        <Link to={`/character/${character._id}`} key={character._id}>
+                            <article>
+                                <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
+                                <p className="name">{character.name}</p>
+                                <p className="description">{character.description}</p>
+                            </article>
+                        </Link>
+                    </div>
                 );
             })}
 

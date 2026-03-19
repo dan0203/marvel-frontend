@@ -4,6 +4,7 @@ import './Comics.css';
 import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Comics = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -11,6 +12,7 @@ const Comics = () => {
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
+    const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -139,11 +141,26 @@ const Comics = () => {
 
             {comics.results.map(comic => {
                 return (
-                    <article key={comic._id}>
-                        <img src={comic.thumbnail.path ? `${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}` : '../../images/default.jpg'} alt={comic.title} />
-                        <p className="title">{comic.title}</p>
-                        <p className="description">{comic.description}</p>
-                    </article>
+                    <div>
+                        <button
+                            onClick={() => {
+                                if (!favorites.includes(comic._id)) {
+                                    const copyFavorites = [...favorites];
+                                    copyFavorites.push(comic._id);
+                                    setFavorites(copyFavorites);
+                                    Cookies.set('comics_favorites', JSON.stringify(copyFavorites));
+                                }
+                            }}
+                        >
+                            COEUR
+                        </button>
+
+                        <article key={comic._id}>
+                            <img src={comic.thumbnail.path ? `${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}` : '../../images/default.jpg'} alt={comic.title} />
+                            <p className="title">{comic.title}</p>
+                            <p className="description">{comic.description}</p>
+                        </article>
+                    </div>
                 );
             })}
 
