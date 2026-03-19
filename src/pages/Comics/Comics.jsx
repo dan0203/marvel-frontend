@@ -1,5 +1,10 @@
 // Modules internes
 import './Comics.css';
+import ComicCard from './ComicCard';
+import Search from '../../components/Search/Search';
+import Limit from '../../components/Limit/Limit';
+import Pagination from '../../components/Pagination/Pagination';
+import Button from '../../components/Button/Button';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn
@@ -78,72 +83,19 @@ const Comics = () => {
     ) : (
         <main>
             <div className="filters">
-                <label htmlFor="search">LOUPE</label>
-                <input
-                    type="text"
-                    name="search"
-                    id="search"
-                    value={search}
-                    onChange={event => {
-                        setSearch(event.target.value);
-                    }}
-                />
+                <Search search={search} setSearch={setSearch} />
 
-                <div className="limit">
-                    <span>Afficher</span>
-                    <select
-                        name="limit"
-                        value={limit}
-                        onChange={event => {
-                            setLimit(Number(event.target.value));
-                            setCurrentPage(1);
-                        }}
-                    >
-                        <option value="20">20</option>
-                        <option value="40">40</option>
-                        <option value="60">60</option>
-                        <option value="80">80</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span>comics par page</span>
-                </div>
+                <Limit limit={limit} setLimit={setLimit} setCurrentPage={setCurrentPage} />
             </div>
 
-            <div className="pagination">
-                <button
-                    onClick={() => {
-                        setCurrentPage(currentPage - 1);
-                    }}
-                    disabled={!(currentPage > 1)}
-                >
-                    &lt;
-                </button>
-
-                {pages.map((page, index) =>
-                    page === '...' ? (
-                        <span key={index}>...</span>
-                    ) : (
-                        <button key={index} className={currentPage === page ? 'active' : ''} onClick={() => setCurrentPage(page)}>
-                            {page}
-                        </button>
-                    ),
-                )}
-
-                <button
-                    onClick={() => {
-                        setCurrentPage(currentPage + 1);
-                    }}
-                    disabled={!(currentPage < Math.ceil(comics.count / limit))}
-                >
-                    &gt;
-                </button>
-            </div>
+            <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} pages={pages} />
 
             {comics.results.map(comic => {
                 return (
-                    <div>
-                        <button
-                            onClick={() => {
+                    <div key={comic._id}>
+                        <Button
+                            text="COEUR"
+                            onClickFunc={() => {
                                 if (!favorites.includes(comic._id)) {
                                     const copyFavorites = [...favorites];
                                     copyFavorites.push(comic._id);
@@ -151,48 +103,14 @@ const Comics = () => {
                                     Cookies.set('comics_favorites', JSON.stringify(copyFavorites));
                                 }
                             }}
-                        >
-                            COEUR
-                        </button>
+                        />
 
-                        <article key={comic._id}>
-                            <img src={comic.thumbnail.path ? `${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}` : '../../images/default.jpg'} alt={comic.title} />
-                            <p className="title">{comic.title}</p>
-                            <p className="description">{comic.description}</p>
-                        </article>
+                        <ComicCard key={comic._id} comic={comic} />
                     </div>
                 );
             })}
 
-            <div className="pagination">
-                <button
-                    onClick={() => {
-                        setCurrentPage(currentPage - 1);
-                    }}
-                    disabled={!(currentPage > 1)}
-                >
-                    &lt;
-                </button>
-
-                {pages.map((page, index) =>
-                    page === '...' ? (
-                        <span key={index}>...</span>
-                    ) : (
-                        <button key={index} className={currentPage === page ? 'active' : ''} onClick={() => setCurrentPage(page)}>
-                            {page}
-                        </button>
-                    ),
-                )}
-
-                <button
-                    onClick={() => {
-                        setCurrentPage(currentPage + 1);
-                    }}
-                    disabled={!(currentPage < Math.ceil(comics.count / limit))}
-                >
-                    &gt;
-                </button>
-            </div>
+            <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} pages={pages} />
         </main>
     );
 };

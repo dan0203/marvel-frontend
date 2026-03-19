@@ -1,5 +1,10 @@
 // Modules internes
 import './Characters.css';
+import Search from '../../components/Search/Search';
+import Limit from '../../components/Limit/Limit';
+import CharacterCard from '../Character/CharacterCard';
+import Pagination from '../../components/Pagination/Pagination';
+import Button from '../../components/Button/Button';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn
@@ -79,74 +84,19 @@ const Characters = () => {
     ) : (
         <main>
             <div className="filters">
-                <div className="search">
-                    <label htmlFor="search">LOUPE</label>
-                    <input
-                        type="text"
-                        name="search"
-                        id="search"
-                        value={search}
-                        onChange={event => {
-                            setSearch(event.target.value);
-                        }}
-                    />
-                </div>
+                <Search search={search} setSearch={setSearch} />
 
-                <div className="limit">
-                    <span>Afficher</span>
-                    <select
-                        name="limit"
-                        value={limit}
-                        onChange={event => {
-                            setLimit(Number(event.target.value));
-                            setCurrentPage(1);
-                        }}
-                    >
-                        <option value="20">20</option>
-                        <option value="40">40</option>
-                        <option value="60">60</option>
-                        <option value="80">80</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span>personnages par page</span>
-                </div>
+                <Limit limit={limit} setLimit={setLimit} setCurrentPage={setCurrentPage} />
             </div>
 
-            <div className="pagination">
-                <button
-                    onClick={() => {
-                        setCurrentPage(currentPage - 1);
-                    }}
-                    disabled={!(currentPage > 1)}
-                >
-                    &lt;
-                </button>
-
-                {pages.map((page, index) =>
-                    page === '...' ? (
-                        <span key={index}>...</span>
-                    ) : (
-                        <button key={index} className={currentPage === page ? 'active' : ''} onClick={() => setCurrentPage(page)}>
-                            {page}
-                        </button>
-                    ),
-                )}
-
-                <button
-                    onClick={() => {
-                        setCurrentPage(currentPage + 1);
-                    }}
-                    disabled={!(currentPage < Math.ceil(characters.count / limit))}
-                >
-                    &gt;
-                </button>
-            </div>
+            <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} pages={pages} />
 
             {characters.results.map(character => {
                 return (
-                    <div>
-                        <button
-                            onClick={() => {
+                    <div key={character._id}>
+                        <Button
+                            text="COEUR"
+                            onClickFunc={() => {
                                 if (!favorites.includes(character._id)) {
                                     const copyFavorites = [...favorites];
                                     copyFavorites.push(character._id);
@@ -154,50 +104,16 @@ const Characters = () => {
                                     Cookies.set('characters_favorites', JSON.stringify(copyFavorites));
                                 }
                             }}
-                        >
-                            COEUR
-                        </button>
+                        />
 
                         <Link to={`/character/${character._id}`} key={character._id}>
-                            <article>
-                                <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
-                                <p className="name">{character.name}</p>
-                                <p className="description">{character.description}</p>
-                            </article>
+                            <CharacterCard character={character} />
                         </Link>
                     </div>
                 );
             })}
 
-            <div className="pagination">
-                <button
-                    onClick={() => {
-                        setCurrentPage(currentPage - 1);
-                    }}
-                    disabled={!(currentPage > 1)}
-                >
-                    &lt;
-                </button>
-
-                {pages.map((page, index) =>
-                    page === '...' ? (
-                        <span key={index}>...</span>
-                    ) : (
-                        <button key={index} className={currentPage === page ? 'active' : ''} onClick={() => setCurrentPage(page)}>
-                            {page}
-                        </button>
-                    ),
-                )}
-
-                <button
-                    onClick={() => {
-                        setCurrentPage(currentPage + 1);
-                    }}
-                    disabled={!(currentPage < Math.ceil(characters.count / limit))}
-                >
-                    &gt;
-                </button>
-            </div>
+            <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} pages={pages} />
         </main>
     );
 };

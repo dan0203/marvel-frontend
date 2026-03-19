@@ -1,5 +1,6 @@
 // Modules internes
 import './Character.css';
+import CharacterCard from './CharacterCard';
 // Modeuls react
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -29,6 +30,7 @@ const Character = () => {
                 // Reconstruction du personnage avec le tableau des données complètes des comics qui lui sont associées
                 //  (car le tableau comics renvoyé dans characterResponse ne contient que les id des comics)
                 characterToDisplay.comics = comicsResponse.data.comics;
+                characterToDisplay.comics.show = true;
 
                 setCharacter(characterToDisplay);
                 setIsLoading(false);
@@ -44,20 +46,7 @@ const Character = () => {
         <p>Chargement en cours...</p>
     ) : (
         <main>
-            <img src={`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`} alt={character.name} />
-            <p className="name">{character.name}</p>
-            <p className="description">{character.description}</p>
-            {character.comics &&
-                character.comics.map(comic => {
-                    return (
-                        <div key={comic._id}>
-                            <p>{comic.title}</p>
-                            <p>{comic.description}</p>
-                            <img src={`${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}`} alt={comic.title} />
-                        </div>
-                    );
-                })}
-            ;
+            <CharacterCard character={character} />
         </main>
     );
 };
