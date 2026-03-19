@@ -17,7 +17,7 @@ const Comics = () => {
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
-    const [favorites, setFavorites] = useState([]);
+    const [favorites, setFavorites] = useState(JSON.parse(Cookies.get('comics_favorites')));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -97,6 +97,7 @@ const Comics = () => {
                             text="COEUR"
                             onClickFunc={() => {
                                 if (!favorites.includes(comic._id)) {
+                                    // Ajouter le nouveau favori
                                     const copyFavorites = [...favorites];
                                     copyFavorites.push(comic._id);
                                     setFavorites(copyFavorites);

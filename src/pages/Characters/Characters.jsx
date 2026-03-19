@@ -18,7 +18,7 @@ const Characters = () => {
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
-    const [favorites, setFavorites] = useState([]);
+    const [favorites, setFavorites] = useState(JSON.parse(Cookies.get('characters_favorites')));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -97,6 +97,7 @@ const Characters = () => {
                         <Button
                             text="COEUR"
                             onClickFunc={() => {
+                                // Ajouter le nouveau favori
                                 if (!favorites.includes(character._id)) {
                                     const copyFavorites = [...favorites];
                                     copyFavorites.push(character._id);
