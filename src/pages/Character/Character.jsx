@@ -1,11 +1,11 @@
 // Modules internes
 import './Character.css';
-import CharacterCard from './CharacterCard';
-// Modeuls react
+// Modules react
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 // Modules yarn
 import { useLocation } from 'react-router';
+import ComicCard from '../Comics/ComicCard';
 
 const Character = () => {
     // Permet la récupération de la valeur id du personnage passé en param dans la route : /character/:id
@@ -45,8 +45,24 @@ const Character = () => {
     return isLoading ? (
         <p>Chargement en cours...</p>
     ) : (
-        <main>
-            <CharacterCard character={character} />
+        <main className="main-character">
+            <div className="container">
+                <h1>{character.name}</h1>
+                <section className="character">
+                    <div className="content">
+                        <img src={character.thumbnail.path ? `${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}` : defaultImage} alt={character.name} onError={e => (e.target.src = defaultImage)} />
+                        <p>{character.description || 'N/A'}</p>
+                    </div>
+                </section>
+
+                <h2>Comics avec {character.name}</h2>
+                <section className="comics">
+                    {character.comics.show &&
+                        character.comics.map(comic => {
+                            return <ComicCard key={comic._id} comic={comic} />;
+                        })}
+                </section>
+            </div>
         </main>
     );
 };

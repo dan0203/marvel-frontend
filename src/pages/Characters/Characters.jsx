@@ -57,11 +57,11 @@ const Characters = () => {
 
                 <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(characters.count / limit)} />
 
-                <div className="characters">
+                <section className="characters">
                     {characters.results.map(character => {
                         return <CharacterCard character={character} key={character._id} />;
                     })}
-                </div>
+                </section>
 
                 <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(characters.count / limit)} />
             </div>
