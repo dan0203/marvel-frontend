@@ -1,0 +1,82 @@
+.hero {
+    margin-bottom: 20px;
+}
+
+.hero img {
+    width: 100vw;
+    height: 600px;
+    object-fit: cover;
+}
+
+.main-home .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-home h1 {
+    font-size: 4rem;
+    line-height: 1.3;
+    width: 70%;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 150px;
+}
+
+.main-home section {
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+}
+
+.main-home .card {
+    width: 400px;
+    height: 270px;
+    box-shadow: 5px 5px 6px rgba(255, 255, 255, 0.8);
+
+    display: flex;
+    flex-direction: column;
+
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-home .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(0deg, transparent, transparent 30%, rgba(255, 0, 0, 0.7));
+    transform: rotate(-45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+.main-home .card:hover {
+    cursor: pointer;
+
+    transform: scale(1.05);
+    box-shadow: 0 0 60px rgba(255, 0, 0, 0.8);
+}
+
+.main-home .card:hover::before {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(100%);
+}
+
+.main-home .card h2 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 10px 0 0 20px;
+}
+
+.main-home .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

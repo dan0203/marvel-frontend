@@ -8,6 +8,7 @@ import Favorites from './pages/Favorites/Favorites';
 import Character from './pages/Character/Character';
 // Modules yarn
 import { BrowserRouter as Router, Routes, Route } from 'react-router';
+import Footer from './components/Footer/Footer';
 
 function App() {
     return (
@@ -23,6 +24,8 @@ function App() {
                     <Route path="/character/:id" element={<Character />} />
                     <Route path="*" element={<div className="container">Route not found</div>} />
                 </Routes>
+
+                <Footer />
             </Router>
         </>
     );
