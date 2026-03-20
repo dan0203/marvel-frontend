@@ -1,0 +1,26 @@
+.main-comics {
+    margin-top: 50px;
+}
+
+.main-comics .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-comics .filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 150px;
+
+    margin-bottom: 40px;
+}
+
+.main-comics .comics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+
+    margin-bottom: 40px;
+}

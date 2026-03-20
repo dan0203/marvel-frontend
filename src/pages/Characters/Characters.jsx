@@ -2,8 +2,8 @@
 import './Characters.css';
 import Search from '../../components/Search/Search';
 import Limit from '../../components/Limit/Limit';
-import CharacterCard from '../Character/CharacterCard';
 import Pagination from '../../components/Pagination/Pagination';
+import CharacterCard from '../Character/CharacterCard';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn

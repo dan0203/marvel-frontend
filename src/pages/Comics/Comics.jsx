@@ -1,15 +1,13 @@
 // Modules internes
 import './Comics.css';
-import ComicCard from './ComicCard';
 import Search from '../../components/Search/Search';
 import Limit from '../../components/Limit/Limit';
 import Pagination from '../../components/Pagination/Pagination';
-import Button from '../../components/Button/Button';
+import ComicCard from './ComicCard';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const Comics = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +15,6 @@ const Comics = () => {
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
-    const [favorites, setFavorites] = useState(JSON.parse(Cookies.get('comics_favorites')));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,6 +34,8 @@ const Comics = () => {
                 // Récupération des données de tous les comics
                 const response = await axios.get(import.meta.env.VITE_API_URL + '/comics' + queries);
 
+                console.log(response.data);
+
                 setComics(response.data);
                 setIsLoading(false);
             } catch (error) {
@@ -50,37 +49,24 @@ const Comics = () => {
     return isLoading ? (
         <p>Chargement en cours...</p>
     ) : (
-        <main>
-            <div className="filters">
-                <Search search={search} setSearch={setSearch} searchLabel="comic" />
+        <main className="main-comics">
+            <div className="container">
+                <div className="filters">
+                    <Search search={search} setSearch={setSearch} searchLabel="comic" />
 
-                <Limit limit={limit} setLimit={setLimit} setCurrentPage={setCurrentPage} />
+                    <Limit limit={limit} setLimit={setLimit} setCurrentPage={setCurrentPage} />
+                </div>
+
+                <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(comics.count / limit)} />
+
+                <div className="comics">
+                    {comics.results.map(comic => {
+                        return <ComicCard comic={comic} key={comic._id} />;
+                    })}
+                </div>
+
+                <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(comics.count / limit)} />
             </div>
-
-            <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(comics.count / limit)} />
-
-            {comics.results.map(comic => {
-                return (
-                    <div key={comic._id}>
-                        <Button
-                            text="COEUR"
-                            onClickFunc={() => {
-                                if (!favorites.includes(comic._id)) {
-                                    // Ajouter le nouveau favori
-                                    const copyFavorites = [...favorites];
-                                    copyFavorites.push(comic._id);
-                                    setFavorites(copyFavorites);
-                                    Cookies.set('comics_favorites', JSON.stringify(copyFavorites));
-                                }
-                            }}
-                        />
-
-                        <ComicCard key={comic._id} comic={comic} />
-                    </div>
-                );
-            })}
-
-            <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(comics.count / limit)} />
         </main>
     );
 };

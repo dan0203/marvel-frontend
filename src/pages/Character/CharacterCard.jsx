@@ -1,5 +1,6 @@
 // Modules internes
 import './CharacterCard.css';
+import defaultImage from '../../assets/images/default.jpg';
 import ComicCard from '../Comics/ComicCard';
 import Button from '../../components/Button/Button';
 // Modules react
@@ -30,7 +31,7 @@ const CharacterCard = ({ character }) => {
                 <Link to={`/character/${character._id}`}>
                     <h2>{character.name}</h2>
                     <div className="content">
-                        <img src={character.thumbnail.path ? `${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}` : '../../images/default.jpg'} alt={character.name} />
+                        <img src={character.thumbnail.path ? `${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}` : defaultImage} alt={character.name} onError={e => (e.target.src = defaultImage)} />
                         <p>{character.description || 'N/A'}</p>
                     </div>
                     {character.comics.show &&
