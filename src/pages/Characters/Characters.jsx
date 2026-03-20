@@ -4,13 +4,10 @@ import Search from '../../components/Search/Search';
 import Limit from '../../components/Limit/Limit';
 import CharacterCard from '../Character/CharacterCard';
 import Pagination from '../../components/Pagination/Pagination';
-import Button from '../../components/Button/Button';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
-import { Link } from 'react-router';
-import Cookies from 'js-cookie';
 
 const Characters = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +15,6 @@ const Characters = () => {
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
-    const [favorites, setFavorites] = useState(JSON.parse(Cookies.get('characters_favorites')));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -51,39 +47,24 @@ const Characters = () => {
     return isLoading ? (
         <p>Chargement en cours...</p>
     ) : (
-        <main>
-            <div className="filters">
-                <Search search={search} setSearch={setSearch} />
+        <main className="main-characters">
+            <div className="container">
+                <div className="filters">
+                    <Search search={search} setSearch={setSearch} searchLabel="personnage" />
 
-                <Limit limit={limit} setLimit={setLimit} setCurrentPage={setCurrentPage} />
+                    <Limit limit={limit} setLimit={setLimit} setCurrentPage={setCurrentPage} />
+                </div>
+
+                <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(characters.count / limit)} />
+
+                <div className="characters">
+                    {characters.results.map(character => {
+                        return <CharacterCard character={character} key={character._id} />;
+                    })}
+                </div>
+
+                <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(characters.count / limit)} />
             </div>
-
-            <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(characters.count / limit)} />
-
-            {characters.results.map(character => {
-                return (
-                    <div key={character._id}>
-                        <Button
-                            text="COEUR"
-                            onClickFunc={() => {
-                                // Ajouter le nouveau favori
-                                if (!favorites.includes(character._id)) {
-                                    const copyFavorites = [...favorites];
-                                    copyFavorites.push(character._id);
-                                    setFavorites(copyFavorites);
-                                    Cookies.set('characters_favorites', JSON.stringify(copyFavorites));
-                                }
-                            }}
-                        />
-
-                        <Link to={`/character/${character._id}`} key={character._id}>
-                            <CharacterCard character={character} />
-                        </Link>
-                    </div>
-                );
-            })}
-
-            <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(characters.count / limit)} />
         </main>
     );
 };

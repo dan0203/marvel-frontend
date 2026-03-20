@@ -52,7 +52,7 @@ const Comics = () => {
     ) : (
         <main>
             <div className="filters">
-                <Search search={search} setSearch={setSearch} />
+                <Search search={search} setSearch={setSearch} searchLabel="comic" />
 
                 <Limit limit={limit} setLimit={setLimit} setCurrentPage={setCurrentPage} />
             </div>

@@ -1,10 +1,9 @@
 // Modules internes
 import './Search.css';
 
-const Search = ({ search, setSearch }) => {
+const Search = ({ search, setSearch, searchLabel }) => {
     return (
-        <div>
-            <label htmlFor="search">LOUPE</label>
+        <div className="search">
             <input
                 type="text"
                 name="search"
@@ -13,6 +12,7 @@ const Search = ({ search, setSearch }) => {
                 onChange={event => {
                     setSearch(event.target.value);
                 }}
+                placeholder={`Rechercher un ${searchLabel}`}
             />
         </div>
     );

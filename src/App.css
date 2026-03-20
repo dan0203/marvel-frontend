@@ -24,3 +24,24 @@ a {
     color: #fff;
     padding: 0 8px 0 5px;
 }
+
+input,
+select {
+    font: inherit;
+    background-color: #fff;
+    border: 1px solid rgb(255, 0, 0);
+    border-radius: 5px;
+}
+
+select {
+    padding: 2px 5px;
+}
+
+input {
+    width: 400px;
+    padding: 10px 15px;
+}
+
+input:focus {
+    outline: none;
+}
