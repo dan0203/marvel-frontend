@@ -3,35 +3,22 @@ import './CharacterCard.css';
 import defaultImage from '../../assets/images/default.jpg';
 import ComicCard from '../Comics/ComicCard';
 import Button from '../../components/Button/Button';
-// Modules react
-import { useState } from 'react';
 // Modules yarn
-import Cookies from 'js-cookie';
 import { Link } from 'react-router';
-import { CiHeart } from 'react-icons/ci';
+import { FaRegHeart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 
-const CharacterCard = ({ character }) => {
-    const charactersFavorites = Cookies.get('characters_favorites');
-    const initFavorites = charactersFavorites ? JSON.parse(charactersFavorites) : [];
-    console.log('charactersFavorites', JSON.parse(charactersFavorites));
-
-    const [favorites, setFavorites] = useState(initFavorites);
-
+const CharacterCard = ({ character, favorites, addToFavorites }) => {
     return (
         <>
             <article className="character-card">
                 <Button
-                    text={<CiHeart />}
+                    text={favorites.includes(character._id) ? <FaHeart /> : <FaRegHeart />}
                     className="add-to-favorite"
                     onClickFunc={() => {
                         // Ajouter le nouveau favori
                         if (!favorites.includes(character._id)) {
-                            console.log('favorites', favorites);
-                            const copyFavorites = [...favorites];
-                            copyFavorites.push(character._id);
-                            Cookies.set('characters_favorites', JSON.stringify(copyFavorites));
-                            console.log('copyFavorites', copyFavorites);
-                            setFavorites(copyFavorites);
+                            addToFavorites(character._id);
                         }
                     }}
                 />

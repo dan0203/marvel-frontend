@@ -8,6 +8,7 @@ import CharacterCard from '../Character/CharacterCard';
 import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Characters = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -15,6 +16,14 @@ const Characters = () => {
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
+    const [favorites, setFavorites] = useState([]);
+
+    const addToFavorites = characterId => {
+        const copyFavorites = [...favorites];
+        copyFavorites.push(characterId);
+        Cookies.set('characters_favorites', JSON.stringify(copyFavorites));
+        setFavorites(copyFavorites);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,6 +51,10 @@ const Characters = () => {
         };
 
         fetchData();
+
+        // Récupération des personnages favoris
+        const charactersFavorites = Cookies.get('characters_favorites');
+        charactersFavorites && setFavorites(JSON.parse(charactersFavorites));
     }, [search, limit, currentPage]);
 
     return isLoading ? (
@@ -59,7 +72,7 @@ const Characters = () => {
 
                 <section className="characters">
                     {characters.results.map(character => {
-                        return <CharacterCard character={character} key={character._id} />;
+                        return <CharacterCard character={character} key={character._id} favorites={favorites} addToFavorites={addToFavorites} />;
                     })}
                 </section>
 
