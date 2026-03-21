@@ -8,7 +8,7 @@ import { Link } from 'react-router';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 
-const CharacterCard = ({ character, favorites, addToFavorites }) => {
+const CharacterCard = ({ character, favorites, addToFavorites, removeFromFavorites }) => {
     return (
         <>
             <article className="character-card">
@@ -19,6 +19,8 @@ const CharacterCard = ({ character, favorites, addToFavorites }) => {
                         // Ajouter le nouveau favori
                         if (!favorites.includes(character._id)) {
                             addToFavorites(character._id);
+                        } else {
+                            removeFromFavorites(character._id);
                         }
                     }}
                 />

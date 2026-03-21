@@ -6,7 +6,7 @@ import Button from '../../components/Button/Button';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 
-const ComicCard = ({ comic, favorites, addToFavorites }) => {
+const ComicCard = ({ comic, favorites, addToFavorites, removeFromFavorites }) => {
     return (
         <>
             <article className="comic-card">
@@ -17,6 +17,8 @@ const ComicCard = ({ comic, favorites, addToFavorites }) => {
                         // Ajouter le nouveau favori
                         if (!favorites.includes(comic._id)) {
                             addToFavorites(comic._id);
+                        } else {
+                            removeFromFavorites(comic._id);
                         }
                     }}
                 />

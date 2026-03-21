@@ -25,6 +25,18 @@ const Comics = () => {
         setFavorites(copyFavorites);
     };
 
+    const removeFromFavorites = comicId => {
+        const copyFavorites = [...favorites];
+        const index = copyFavorites.indexOf(comicId);
+
+        if (index !== -1) {
+            copyFavorites.splice(index, 1);
+        }
+
+        Cookies.set('comics_favorites', JSON.stringify(copyFavorites));
+        setFavorites(copyFavorites);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -72,7 +84,7 @@ const Comics = () => {
 
                 <div className="comics">
                     {comics.results.map(comic => {
-                        return <ComicCard comic={comic} key={comic._id} favorites={favorites} addToFavorites={addToFavorites} />;
+                        return <ComicCard comic={comic} key={comic._id} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
                     })}
                 </div>
 
