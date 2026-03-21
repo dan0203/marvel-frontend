@@ -7,3 +7,8 @@
 .main-favorites .comics-favorites h2 {
     margin-bottom: 20px;
 }
+
+.main-favorites .characters-favorites p,
+.main-favorites .comics-favorites p {
+    margin-bottom: 50px;
+}

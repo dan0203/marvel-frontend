@@ -1,6 +1,6 @@
 /* FOOTER */
 footer {
-    height: 60px;
+    height: var(--footer-height);
 }
 
 footer img {
@@ -8,5 +8,5 @@ footer img {
 }
 
 footer p a:hover {
-    color: rgb(255, 0, 0);
+    color: var(--primary-color);
 }

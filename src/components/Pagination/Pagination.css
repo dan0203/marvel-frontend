@@ -16,7 +16,7 @@
 }
 
 .pagination button:hover:not(:disabled):not(.active) {
-    border: 1px solid rgb(255, 0, 0);
+    border: 1px solid var(--primary-color);
 }
 
 .pagination button:disabled {
@@ -24,7 +24,7 @@
 }
 
 .pagination button.active {
-    background-color: #111;
-    color: rgb(255, 0, 0);
-    border-color: #111;
+    background-color: #000;
+    color: var(--primary-color);
+    border-color: #000;
 }

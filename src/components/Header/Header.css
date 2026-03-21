@@ -1,6 +1,6 @@
 /* HEADER */
 header {
-    height: 80px;
+    height: var(--header-height);
 }
 
 header img {
@@ -28,7 +28,7 @@ header ul a::after {
     position: absolute;
     width: 80%;
     height: 2px;
-    background: linear-gradient(to right, #ff0000, #fff);
+    background: linear-gradient(to right, var(--primary-color), #fff);
     bottom: -2px;
     left: 10%;
     transform: scaleX(0);
