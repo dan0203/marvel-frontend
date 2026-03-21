@@ -8,34 +8,13 @@ import CharacterCard from '../Character/CharacterCard';
 import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
-const Characters = () => {
+const Characters = ({ favorites, addToFavorites, removeFromFavorites }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [characters, setCharacters] = useState([]);
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
-    const [favorites, setFavorites] = useState([]);
-
-    const addToFavorites = characterId => {
-        const copyFavorites = [...favorites];
-        copyFavorites.push(characterId);
-        Cookies.set('characters_favorites', JSON.stringify(copyFavorites));
-        setFavorites(copyFavorites);
-    };
-
-    const removeFromFavorites = characterId => {
-        const copyFavorites = [...favorites];
-        const index = copyFavorites.indexOf(characterId);
-
-        if (index !== -1) {
-            copyFavorites.splice(index, 1);
-        }
-
-        Cookies.set('characters_favorites', JSON.stringify(copyFavorites));
-        setFavorites(copyFavorites);
-    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,10 +42,6 @@ const Characters = () => {
         };
 
         fetchData();
-
-        // Récupération des personnages favoris
-        const charactersFavorites = Cookies.get('characters_favorites');
-        charactersFavorites && setFavorites(JSON.parse(charactersFavorites));
     }, [search, limit, currentPage]);
 
     return isLoading ? (
@@ -84,7 +59,7 @@ const Characters = () => {
 
                 <section className="characters">
                     {characters.results.map(character => {
-                        return <CharacterCard character={character} key={character._id} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
+                        return <CharacterCard character={character} key={character._id} favoriteCharacters={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
                     })}
                 </section>
 

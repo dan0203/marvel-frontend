@@ -5,45 +5,37 @@ import CharacterCard from '../Character/CharacterCard';
 import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import ComicCard from '../Comics/ComicCard';
 
-const Favorites = () => {
+const Favorites = ({ favoriteCharacters, favoriteComics, addToFavorites, removeFromFavorites }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [favoriteCharactersArray, setFavoriteCharactersArray] = useState([]);
-    const [favoriteComicsArray, setFavoriteComicsArray] = useState([]);
+    const [favoriteCharactersDetailed, setFavoriteCharactersDetailed] = useState([]);
+    const [favoriteComicsDetailed, setFavoriteComicsDetailed] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Récupération du cookie characters_favorites
-                const charactersFavoritesFromCookie = Cookies.get('characters_favorites');
-                let favoriteCharactersIdArrayFromCookie = charactersFavoritesFromCookie ? JSON.parse(charactersFavoritesFromCookie) : [];
-
-                if (favoriteCharactersIdArrayFromCookie.length > 0) {
-                    const copyFavorites = [...favoriteCharactersArray];
-                    // Récupération des données des personnages
-                    for (let i = 0; i < favoriteCharactersIdArrayFromCookie.length; i++) {
-                        const responseCharacters = await axios.get(import.meta.env.VITE_API_URL + '/character/' + favoriteCharactersIdArrayFromCookie[i]);
+                // Requête de récupération des données des personnages favoris
+                if (favoriteCharacters.length > 0) {
+                    const copyFavorites = [];
+                    for (let i = 0; i < favoriteCharacters.length; i++) {
+                        const responseCharacters = await axios.get(import.meta.env.VITE_API_URL + '/character/' + favoriteCharacters[i]);
 
                         copyFavorites.push(responseCharacters.data);
                     }
-                    setFavoriteCharactersArray(copyFavorites);
+                    setFavoriteCharactersDetailed(copyFavorites);
                 }
 
-                // Récupération du cookie comics_favorites
-                const comicsFavoritesFromCookie = Cookies.get('comics_favorites');
-                let favoriteComicsIdArrayFromCookie = comicsFavoritesFromCookie ? JSON.parse(comicsFavoritesFromCookie) : [];
-
-                if (favoriteComicsIdArrayFromCookie.length > 0) {
-                    const copyFavorites = [...favoriteComicsArray];
-                    // Récupération des données des personnages
-                    for (let i = 0; i < favoriteComicsIdArrayFromCookie.length; i++) {
-                        const responseComics = await axios.get(import.meta.env.VITE_API_URL + '/comic/' + favoriteComicsIdArrayFromCookie[i]);
+                // Requête de récupération des données des comics favoris
+                if (favoriteComics.length > 0) {
+                    const copyFavorites = [];
+                    for (let i = 0; i < favoriteComics.length; i++) {
+                        const responseComics = await axios.get(import.meta.env.VITE_API_URL + '/comic/' + favoriteComics[i]);
 
                         copyFavorites.push(responseComics.data);
                     }
-                    setFavoriteComicsArray(copyFavorites);
+                    setFavoriteComicsDetailed(copyFavorites);
                 }
 
                 setIsLoading(false);
@@ -53,7 +45,7 @@ const Favorites = () => {
         };
 
         fetchData();
-    }, []);
+    }, [favoriteCharacters, favoriteComics]);
 
     return isLoading ? (
         <p>Chargement en cours...</p>
@@ -64,16 +56,24 @@ const Favorites = () => {
 
                 <h2>Personnages</h2>
                 <section className="characters-favorites">
-                    {favoriteCharactersArray.map(character => {
-                        return <CharacterCard character={character} key={character._id} />;
-                    })}
+                    {favoriteCharacters.length > 0 ? (
+                        favoriteCharactersDetailed.map(character => {
+                            return <CharacterCard character={character} key={character._id} favoriteCharacters={favoriteCharacters} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
+                        })
+                    ) : (
+                        <p>Aucun personnage favori pour le moment</p>
+                    )}
                 </section>
 
                 <h2>Comics</h2>
                 <section className="comics-favorites">
-                    {favoriteComicsArray.map(comic => {
-                        return <ComicCard comic={comic} key={comic._id} />;
-                    })}
+                    {favoriteComics.length > 0 ? (
+                        favoriteComicsDetailed.map(comic => {
+                            return <ComicCard comic={comic} key={comic._id} favoriteComics={favoriteComics} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
+                        })
+                    ) : (
+                        <p>Aucun comic favori pour le moment</p>
+                    )}
                 </section>
             </div>
         </main>

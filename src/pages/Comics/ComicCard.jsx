@@ -6,24 +6,23 @@ import Button from '../../components/Button/Button';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 
-const ComicCard = ({ comic, favorites, addToFavorites, removeFromFavorites }) => {
+const ComicCard = ({ comic, favoriteComics, addToFavorites, removeFromFavorites }) => {
     return (
         <>
             <article className="comic-card">
-                {favorites && (
-                    <Button
-                        text={favorites.includes(comic._id) ? <FaHeart /> : <FaRegHeart />}
-                        className="add-to-favorite"
-                        onClickFunc={() => {
+                <Button
+                    text={favoriteComics && favoriteComics.includes(comic._id) ? <FaHeart /> : <FaRegHeart />}
+                    className="add-to-favorite"
+                    onClickFunc={() => {
+                        if (!favoriteComics.includes(comic._id)) {
                             // Ajouter le nouveau favori
-                            if (!favorites.includes(comic._id)) {
-                                addToFavorites(comic._id);
-                            } else {
-                                removeFromFavorites(comic._id);
-                            }
-                        }}
-                    />
-                )}
+                            addToFavorites(favoriteComics, comic._id, 'comics');
+                        } else {
+                            // Retirer le nouveau favori
+                            removeFromFavorites(favoriteComics, comic._id, 'comics');
+                        }
+                    }}
+                />
 
                 <h2>{comic.title}</h2>
                 <div className="content">
