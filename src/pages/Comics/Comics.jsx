@@ -3,7 +3,7 @@ import './Comics.css';
 import Search from '../../components/Search/Search';
 import Limit from '../../components/Limit/Limit';
 import Pagination from '../../components/Pagination/Pagination';
-import ComicCard from './ComicCard';
+import ComicsList from '../../components/ComicsList/ComicsList';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn
@@ -57,11 +57,7 @@ const Comics = ({ favorites, addToFavorites, removeFromFavorites }) => {
 
                 <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(comics.count / limit)} />
 
-                <div className="comics">
-                    {comics.results.map(comic => {
-                        return <ComicCard comic={comic} key={comic._id} favoriteComics={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
-                    })}
-                </div>
+                <ComicsList comics={comics.results} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
 
                 <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(comics.count / limit)} />
             </div>

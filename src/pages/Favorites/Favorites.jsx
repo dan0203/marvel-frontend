@@ -1,12 +1,11 @@
 // Modules internes
 import './Favorites.css';
-import CharacterCard from '../Character/CharacterCard';
+import CharactersList from '../../components/CharactersList/CharactersList';
+import ComicsList from '../../components/ComicsList/ComicsList';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
-// import Cookies from 'js-cookie';
-import ComicCard from '../Comics/ComicCard';
 
 const Favorites = ({ favoriteCharacters, favoriteComics, addToFavorites, removeFromFavorites }) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -54,26 +53,14 @@ const Favorites = ({ favoriteCharacters, favoriteComics, addToFavorites, removeF
             <div className="container">
                 <h1>Mes favoris</h1>
 
-                <h2>Personnages</h2>
                 <section className="characters-favorites">
-                    {favoriteCharacters.length > 0 ? (
-                        favoriteCharactersDetailed.map(character => {
-                            return <CharacterCard character={character} key={character._id} favoriteCharacters={favoriteCharacters} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
-                        })
-                    ) : (
-                        <p>Aucun personnage favori pour le moment</p>
-                    )}
+                    <h2>Personnages</h2>
+                    {favoriteCharacters.length > 0 ? <CharactersList characters={favoriteCharactersDetailed} favorites={favoriteCharacters} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} /> : <p>Aucun personnage favori pour le moment</p>}
                 </section>
 
-                <h2>Comics</h2>
                 <section className="comics-favorites">
-                    {favoriteComics.length > 0 ? (
-                        favoriteComicsDetailed.map(comic => {
-                            return <ComicCard comic={comic} key={comic._id} favoriteComics={favoriteComics} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
-                        })
-                    ) : (
-                        <p>Aucun comic favori pour le moment</p>
-                    )}
+                    <h2>Comics</h2>
+                    {favoriteComics.length > 0 ? <ComicsList comics={favoriteComicsDetailed} favorites={favoriteComics} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} /> : <p>Aucun comic favori pour le moment</p>}
                 </section>
             </div>
         </main>

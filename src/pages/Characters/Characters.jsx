@@ -3,7 +3,7 @@ import './Characters.css';
 import Search from '../../components/Search/Search';
 import Limit from '../../components/Limit/Limit';
 import Pagination from '../../components/Pagination/Pagination';
-import CharacterCard from '../Character/CharacterCard';
+import CharactersList from '../../components/CharactersList/CharactersList';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn
@@ -57,11 +57,7 @@ const Characters = ({ favorites, addToFavorites, removeFromFavorites }) => {
 
                 <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(characters.count / limit)} />
 
-                <section className="characters">
-                    {characters.results.map(character => {
-                        return <CharacterCard character={character} key={character._id} favoriteCharacters={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
-                    })}
-                </section>
+                <CharactersList characters={characters.results} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
 
                 <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} numberOfPages={Math.ceil(characters.count / limit)} />
             </div>

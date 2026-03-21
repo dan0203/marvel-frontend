@@ -1,11 +1,11 @@
 // Modules internes
 import './Character.css';
+import ComicCard from '../../components/ComicCard/ComicCard';
 // Modules react
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 // Modules yarn
 import { useLocation } from 'react-router';
-import ComicCard from '../Comics/ComicCard';
 
 const Character = () => {
     // Permet la récupération de la valeur id du personnage passé en param dans la route : /character/:id

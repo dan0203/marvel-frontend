@@ -7,6 +7,7 @@ import Comics from './pages/Comics/Comics';
 import Favorites from './pages/Favorites/Favorites';
 import Character from './pages/Character/Character';
 import Footer from './components/Footer/Footer';
+// import { handleFavorites } from './utils/handleFavorites';
 // Modules react
 import { useState, useEffect } from 'react';
 // Modules yarn
@@ -68,8 +69,11 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/characters" element={<Characters favorites={favoriteCharacters} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />} />
+                    {/* <Route path="/characters" element={<Characters favorites={favoriteCharacters} handleFavorites={handleFavorites} setState={setFavoriteCharacters} />} /> */}
                     <Route path="/comics" element={<Comics favorites={favoriteComics} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />} />
+                    {/* <Route path="/comics" element={<Comics favorites={favoriteComics} handleFavorites={handleFavorites} setState={setFavoriteComics} />} /> */}
                     <Route path="/favorites" element={<Favorites favoriteCharacters={favoriteCharacters} favoriteComics={favoriteComics} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />} />
+                    {/* <Route path="/favorites" element={<Favorites favoriteCharacters={favoriteCharacters} favoriteComics={favoriteComics} handleFavorites={handleFavorites} setFavoriteCharacters={setFavoriteCharacters} setFavoriteComics={setFavoriteComics} />} /> */}
                     <Route path="/character/:id" element={<Character />} />
                     <Route path="*" element={<div className="container">Route not found</div>} />
                 </Routes>

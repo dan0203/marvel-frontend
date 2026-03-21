@@ -1,3 +1,4 @@
+/* COMICS */
 .main-comics .container {
     display: flex;
     flex-direction: column;
@@ -9,14 +10,6 @@
     justify-content: center;
     align-items: center;
     gap: 150px;
-
-    margin-bottom: 40px;
-}
-
-.main-comics .comics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
 
     margin-bottom: 40px;
 }
