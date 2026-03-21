@@ -9,7 +9,7 @@ import { FaHeart } from 'react-icons/fa';
 const ComicCard = ({ comic, favoriteComics, addToFavorites, removeFromFavorites }) => {
     return (
         <>
-            <article className="comic-card">
+            <article className="card">
                 <Button
                     text={favoriteComics && favoriteComics.includes(comic._id) ? <FaHeart /> : <FaRegHeart />}
                     className="add-to-favorite"
@@ -24,7 +24,7 @@ const ComicCard = ({ comic, favoriteComics, addToFavorites, removeFromFavorites 
                     }}
                 />
 
-                <h2>{comic.title}</h2>
+                <h3>{comic.title}</h3>
                 <div className="content">
                     <img src={comic.thumbnail.path ? `${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}` : defaultImage} alt={comic.title} onError={e => (e.target.src = defaultImage)} />
                     <p>{comic.description || 'N/A'}</p>

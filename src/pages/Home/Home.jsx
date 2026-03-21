@@ -18,16 +18,17 @@ const Home = () => {
                     Bienvenue dans l'Univers des superhéros <span className="marvel-style">MARVEL</span>
                 </h1>
 
+                {/* On pourrait créer un composant HomeCard pour les deux articles ci-dessous mais j'ai pensé que ce n'était utile ici */}
                 <section>
                     <Link to="/characters">
-                        <article className="card">
+                        <article className="home-card card-animation">
                             <h2>Voir les personnages</h2>
                             <img src={characters} alt="Voir les personnages MARVEL" />
                         </article>
                     </Link>
 
                     <Link to="/comics">
-                        <article className="card">
+                        <article className="home-card card-animation">
                             <h2>Voir les comics</h2>
                             <img src={comics} alt="Voir les comics MARVEL" />
                         </article>

@@ -1,15 +1,6 @@
 /* HEADER */
 header {
     height: 80px;
-    margin-bottom: 50px;
-}
-
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 10px;
 }
 
 header img {

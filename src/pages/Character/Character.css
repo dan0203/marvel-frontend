@@ -4,25 +4,15 @@
 }
 
 .main-character h1 {
-    font-size: 4rem;
-    line-height: 1.3;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.main-character h2 {
-    font-size: 2rem;
-    line-height: 1.3;
-    text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .main-character .comics {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
-
     margin-bottom: 40px;
+}
+
+.main-character .comics h2 {
+    margin-bottom: 20px;
 }
 
 .main-character .character {

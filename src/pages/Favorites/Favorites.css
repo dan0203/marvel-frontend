@@ -1,20 +1,9 @@
 /* FAVORITES */
 .main-favorites h1 {
-    font-size: 4rem;
-    text-align: center;
     margin-bottom: 50px;
 }
 
-.main-favorites .characters-favorites > h2,
-.main-favorites .comics-favorites > h2 {
-    font-size: 2rem;
+.main-favorites .characters-favorites h2,
+.main-favorites .comics-favorites h2 {
     margin-bottom: 20px;
-}
-
-.main-favorites .characters-favorites {
-    margin-bottom: 100px;
-}
-
-.main-favorites .comics-favorites {
-    margin-bottom: 50px;
 }

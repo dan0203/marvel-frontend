@@ -1,13 +1,13 @@
 // Modules internes
 import './Character.css';
-import ComicCard from '../../components/ComicCard/ComicCard';
+import ComicsList from '../../components/ComicsList/ComicsList';
 // Modules react
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 // Modules yarn
 import { useLocation } from 'react-router';
 
-const Character = () => {
+const Character = ({ favorites, addToFavorites, removeFromFavorites }) => {
     // Permet la récupération de la valeur id du personnage passé en param dans la route : /character/:id
     const location = useLocation();
     // Récupération du paramètre id
@@ -55,12 +55,9 @@ const Character = () => {
                     </div>
                 </section>
 
-                <h2>Comics avec {character.name}</h2>
                 <section className="comics">
-                    {character.comics.show &&
-                        character.comics.map(comic => {
-                            return <ComicCard key={comic._id} comic={comic} />;
-                        })}
+                    <h2>Comics avec {character.name}</h2>
+                    <ComicsList comics={character.comics} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
                 </section>
             </div>
         </main>

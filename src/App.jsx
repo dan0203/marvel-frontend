@@ -74,7 +74,7 @@ function App() {
                     {/* <Route path="/comics" element={<Comics favorites={favoriteComics} handleFavorites={handleFavorites} setState={setFavoriteComics} />} /> */}
                     <Route path="/favorites" element={<Favorites favoriteCharacters={favoriteCharacters} favoriteComics={favoriteComics} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />} />
                     {/* <Route path="/favorites" element={<Favorites favoriteCharacters={favoriteCharacters} favoriteComics={favoriteComics} handleFavorites={handleFavorites} setFavoriteCharacters={setFavoriteCharacters} setFavoriteComics={setFavoriteComics} />} /> */}
-                    <Route path="/character/:id" element={<Character />} />
+                    <Route path="/character/:id" element={<Character favorites={favoriteComics} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />} />
                     <Route path="*" element={<div className="container">Route not found</div>} />
                 </Routes>
 

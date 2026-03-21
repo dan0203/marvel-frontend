@@ -10,7 +10,7 @@ import { FaHeart } from 'react-icons/fa';
 const CharacterCard = ({ character, favoriteCharacters, addToFavorites, removeFromFavorites }) => {
     return (
         <>
-            <article className="character-card">
+            <article className="card card-animation">
                 <Button
                     text={favoriteCharacters && favoriteCharacters.includes(character._id) ? <FaHeart /> : <FaRegHeart />}
                     className="add-to-favorite"
@@ -26,7 +26,7 @@ const CharacterCard = ({ character, favoriteCharacters, addToFavorites, removeFr
                 />
 
                 <Link to={`/character/${character._id}`}>
-                    <h2>{character.name}</h2>
+                    <h3>{character.name}</h3>
                     <div className="content">
                         <img src={character.thumbnail.path ? `${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}` : defaultImage} alt={character.name} onError={e => (e.target.src = defaultImage)} />
                         <p>{character.description || 'N/A'}</p>

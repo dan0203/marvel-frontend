@@ -4,7 +4,7 @@ import CharacterCard from '../../components/CharacterCard/CharacterCard';
 
 const CharactersList = ({ characters, favorites, addToFavorites, removeFromFavorites }) => {
     return (
-        <section className="characters-list">
+        <section className="characters-list list">
             {characters.map(character => {
                 return <CharacterCard character={character} key={character._id} favoriteCharacters={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />;
             })}
