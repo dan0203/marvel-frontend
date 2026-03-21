@@ -1,0 +1,26 @@
+.main-favorites h1 {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.main-favorites .container > h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.main-favorites .characters-favorites {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+
+    margin-bottom: 50px;
+}
+
+.main-favorites .comics-favorites {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+
+    margin-bottom: 50px;
+}

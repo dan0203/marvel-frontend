@@ -12,18 +12,20 @@ const CharacterCard = ({ character, favorites, addToFavorites, removeFromFavorit
     return (
         <>
             <article className="character-card">
-                <Button
-                    text={favorites.includes(character._id) ? <FaHeart /> : <FaRegHeart />}
-                    className="add-to-favorite"
-                    onClickFunc={() => {
-                        // Ajouter le nouveau favori
-                        if (!favorites.includes(character._id)) {
-                            addToFavorites(character._id);
-                        } else {
-                            removeFromFavorites(character._id);
-                        }
-                    }}
-                />
+                {favorites && (
+                    <Button
+                        text={favorites.includes(character._id) ? <FaHeart /> : <FaRegHeart />}
+                        className="add-to-favorite"
+                        onClickFunc={() => {
+                            // Ajouter le nouveau favori
+                            if (!favorites.includes(character._id)) {
+                                addToFavorites(character._id);
+                            } else {
+                                removeFromFavorites(character._id);
+                            }
+                        }}
+                    />
+                )}
 
                 <Link to={`/character/${character._id}`}>
                     <h2>{character.name}</h2>

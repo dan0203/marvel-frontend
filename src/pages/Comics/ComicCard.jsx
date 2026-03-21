@@ -10,18 +10,20 @@ const ComicCard = ({ comic, favorites, addToFavorites, removeFromFavorites }) =>
     return (
         <>
             <article className="comic-card">
-                <Button
-                    text={favorites.includes(comic._id) ? <FaHeart /> : <FaRegHeart />}
-                    className="add-to-favorite"
-                    onClickFunc={() => {
-                        // Ajouter le nouveau favori
-                        if (!favorites.includes(comic._id)) {
-                            addToFavorites(comic._id);
-                        } else {
-                            removeFromFavorites(comic._id);
-                        }
-                    }}
-                />
+                {favorites && (
+                    <Button
+                        text={favorites.includes(comic._id) ? <FaHeart /> : <FaRegHeart />}
+                        className="add-to-favorite"
+                        onClickFunc={() => {
+                            // Ajouter le nouveau favori
+                            if (!favorites.includes(comic._id)) {
+                                addToFavorites(comic._id);
+                            } else {
+                                removeFromFavorites(comic._id);
+                            }
+                        }}
+                    />
+                )}
 
                 <h2>{comic.title}</h2>
                 <div className="content">
