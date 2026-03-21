@@ -3,7 +3,6 @@
     border-radius: 5px;
     width: calc((100% - 50px) / 2);
     height: 290px;
-    flex-shrink: 0;
 
     display: flex;
     flex-direction: column;
