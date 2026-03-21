@@ -2,29 +2,24 @@
 import './ComicCard.css';
 import defaultImage from '../../assets/images/default.jpg';
 import Button from '../../components/Button/Button';
-// Modules react
-import { useState } from 'react';
 // Modules yarn
-import Cookies from 'js-cookie';
+import { FaRegHeart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 
-const ComicCard = ({ comic }) => {
-    const [favorites, setFavorites] = useState(JSON.parse(Cookies.get('comics_favorites')));
-
+const ComicCard = ({ comic, favorites, addToFavorites }) => {
     return (
         <>
             <article className="comic-card">
-                {/* <Button
-                    text="COEUR"
+                <Button
+                    text={favorites.includes(comic._id) ? <FaHeart /> : <FaRegHeart />}
+                    className="add-to-favorite"
                     onClickFunc={() => {
+                        // Ajouter le nouveau favori
                         if (!favorites.includes(comic._id)) {
-                            // Ajouter le nouveau favori
-                            const copyFavorites = [...favorites];
-                            copyFavorites.push(comic._id);
-                            setFavorites(copyFavorites);
-                            Cookies.set('comics_favorites', JSON.stringify(copyFavorites));
+                            addToFavorites(comic._id);
                         }
                     }}
-                /> */}
+                />
 
                 <h2>{comic.title}</h2>
                 <div className="content">

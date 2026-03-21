@@ -8,6 +8,7 @@ import ComicCard from './ComicCard';
 import { useState, useEffect } from 'react';
 // Modules yarn
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Comics = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -15,6 +16,14 @@ const Comics = () => {
     const [search, setSearch] = useState('');
     const [limit, setLimit] = useState(100);
     const [currentPage, setCurrentPage] = useState(1);
+    const [favorites, setFavorites] = useState([]);
+
+    const addToFavorites = characterId => {
+        const copyFavorites = [...favorites];
+        copyFavorites.push(characterId);
+        Cookies.set('comics_favorites', JSON.stringify(copyFavorites));
+        setFavorites(copyFavorites);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,8 +43,6 @@ const Comics = () => {
                 // Récupération des données de tous les comics
                 const response = await axios.get(import.meta.env.VITE_API_URL + '/comics' + queries);
 
-                console.log(response.data);
-
                 setComics(response.data);
                 setIsLoading(false);
             } catch (error) {
@@ -44,6 +51,10 @@ const Comics = () => {
         };
 
         fetchData();
+
+        // Récupération des comics favoris
+        const comicsFavorites = Cookies.get('comics_favorites');
+        comicsFavorites && setFavorites(JSON.parse(comicsFavorites));
     }, [search, limit, currentPage]);
 
     return isLoading ? (
@@ -61,7 +72,7 @@ const Comics = () => {
 
                 <div className="comics">
                     {comics.results.map(comic => {
-                        return <ComicCard comic={comic} key={comic._id} />;
+                        return <ComicCard comic={comic} key={comic._id} favorites={favorites} addToFavorites={addToFavorites} />;
                     })}
                 </div>
 
