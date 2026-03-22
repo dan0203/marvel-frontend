@@ -2,7 +2,7 @@
 import './Header.css';
 import logo from '../../assets/images/logo-marvel-320x129.svg';
 // Modules yarn
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router'; // NavLink permet de manipuler la classe "active" sur le lien actif
 
 const Header = () => {
     return (
@@ -15,13 +15,13 @@ const Header = () => {
                 <nav>
                     <ul>
                         <li>
-                            <Link to="/characters">Personnages</Link>
+                            <NavLink to="/characters">Personnages</NavLink>
                         </li>
                         <li>
-                            <Link to="/comics">Comics</Link>
+                            <NavLink to="/comics">Comics</NavLink>
                         </li>
                         <li>
-                            <Link to="/favorites">Favoris</Link>
+                            <NavLink to="/favorites">Favoris</NavLink>
                         </li>
                     </ul>
                 </nav>

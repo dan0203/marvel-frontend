@@ -47,7 +47,7 @@ const Favorites = ({ favoriteCharacters, favoriteComics, addToFavorites, removeF
     }, [favoriteCharacters, favoriteComics]);
 
     return isLoading ? (
-        <p>Chargement en cours...</p>
+        <span className="loader"></span>
     ) : (
         <main className="main-favorites">
             <div className="container">

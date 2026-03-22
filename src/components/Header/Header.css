@@ -43,3 +43,7 @@ header ul a:hover {
 header ul a:hover::after {
     transform: scaleX(1);
 }
+
+a.active {
+    color: var(--primary-color);
+}

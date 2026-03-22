@@ -43,7 +43,7 @@ const Character = ({ favorites, addToFavorites, removeFromFavorites }) => {
     }, []);
 
     return isLoading ? (
-        <p>Chargement en cours...</p>
+        <span className="loader"></span>
     ) : (
         <main className="main-character">
             <div className="container">
